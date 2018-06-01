@@ -9,7 +9,7 @@ public class Airport {
     private double latitude;
     private double longitude;
 
-    public Airport(String name, String icao, String country, String city, double latitude, double longitude) {
+    public Airport(String name, String city, String country, String icae, double latitude, double longitude) {
         this.name = name;
         this.icao = icao;
         this.country = country;
