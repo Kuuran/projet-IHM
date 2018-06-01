@@ -2,8 +2,11 @@ package FlightLive;
 
 import FlightLive.elements.Airport;
 import FlightLive.elements.World;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import org.asynchttpclient.*;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -17,15 +20,48 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         World world = new World();
+        //init_planes();
         parse_airports(world);
 
 
     }
 
+    /* todo corriger
+    private void init_planes() {
+
+
+//Configurer le client http
+        DefaultAsyncHttpClientConfig.Builder clientBuilder = Dsl.config()
+                .setConnectTimeout(500)
+                .setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36")
+                .setKeepAlive(false);
+        AsyncHttpClient client = Dsl.asyncHttpClient(clientBuilder);
+
+//Créer une requête de type GET
+        BoundRequestBuilder getRequest = client.prepareGet("https://public-api.adsbexchange.com/VirtualRadar/AircraftList.json?fOpQ=Air%20France");
+
+
+//Exécuter la requête et récupérer le résultat
+        getRequest.execute(new AsyncCompletionHandler<Object>() {
+            @Override
+            public Object onCompleted(Response response) throws Exception {
+                System.out.println(response.getResponseBody());
+
+                ObjectMapper mapper = new ObjectMapper();
+                mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES); //Ignorer les champs inutiles
+                World world = mapper.readValue(response.getResponseBody(), World.class); //Créer l'objet de plus haut niveau dans le dictionnaire json
+
+                System.out.println(world.getPlanes()[0].getAltitude());
+
+                return response;
+            }
+        });
+
+        //return world;
+    }
+*/
 
     private void parse_airports (World world){
-        //todo recuperer les infos de la ligne et créer un aéroport avec, puis ajouter l'aeroport a la liste dans world
-
 
         String csvFile = "input/airports.csv";
         BufferedReader br = null;
@@ -39,10 +75,8 @@ public class Main extends Application {
 
                 // use comma as separator
                 String[] arrayAirport = line.split(cvsSplitBy);
-                System.out.println(line);
 
                 Airport airport = new Airport(arrayAirport[0],arrayAirport[1],arrayAirport[2],arrayAirport[3],Double.parseDouble(arrayAirport[4]),Double.parseDouble(arrayAirport[5]));
-                System.out.println(airport.getCity());
                 world.addAirport(airport);
 
             }
@@ -62,35 +96,5 @@ public class Main extends Application {
         }
 
     }
-
-    /* private void parse_airports(World world){
-
-        //todo modifier pour que ça lise bien et envoyer la ligne lue a parse_line()
-
-        try {
-            FileReader file = new FileReader("name_fichier.ext");
-            BufferedReader bufRead = new BufferedReader(file);
-
-            String line = bufRead.readLine();
-            while ( line != null) {
-                String[] array = line.split(",");
-
-                int id = Integer.parseInt(array[0]);
-                float val = Float.parseFloat(array[6]);
-
-                line = bufRead.readLine();
-            }
-
-            bufRead.close();
-            file.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-*/
-
 
 }
