@@ -24,6 +24,8 @@ public class Main extends Application {
     private String parse_line (String line, World world){
         //todo recuperer les infos de la ligne et créer un aéroport avec, puis ajouter l'aeroport a la liste dans world
 
+        return "";
+
     }
 
     private void parse_airports(World world){
