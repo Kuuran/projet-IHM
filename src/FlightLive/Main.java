@@ -2,6 +2,8 @@ package FlightLive;
 
 import FlightLive.elements.Airport;
 import FlightLive.elements.World;
+import FlightLive.parse_elements.Flight;
+import FlightLive.parse_elements.FlightList;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
@@ -19,16 +21,16 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        FlightList flightList = init_planes();
         World world = new World();
-        //init_planes();
         parse_airports(world);
 
 
     }
 
-    /* todo corriger
-    private void init_planes() {
 
+   private FlightList init_planes() {
+        FlightList flightlist;
 
 //Configurer le client http
         DefaultAsyncHttpClientConfig.Builder clientBuilder = Dsl.config()
@@ -49,17 +51,17 @@ public class Main extends Application {
 
                 ObjectMapper mapper = new ObjectMapper();
                 mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES); //Ignorer les champs inutiles
-                World world = mapper.readValue(response.getResponseBody(), World.class); //Créer l'objet de plus haut niveau dans le dictionnaire json
+                FlightList flightlist = mapper.readValue(response.getResponseBody(), FlightList.class); //Créer l'objet de plus haut niveau dans le dictionnaire json
 
-                System.out.println(world.getPlanes()[0].getAltitude());
+                //System.out.println(world.getPlanes()[0].getAltitude());
 
                 return response;
             }
         });
 
-        //return world;
+        return flightlist;
     }
-*/
+
 
     private void parse_airports (World world){
 

@@ -21,7 +21,7 @@ public class World {
 
     private ArrayList<Airport> airports;
     private Plane[] planes;
-    private String lastDv;
+   // private String lastDv;
 
     public World(){
         airports = new ArrayList<>();
