@@ -4,6 +4,7 @@ import FlightLive.elements.Airport;
 import FlightLive.elements.World;
 import FlightLive.parse_elements.Flight;
 import FlightLive.parse_elements.FlightList;
+import FlightLive.parse_elements.Request;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
@@ -17,20 +18,71 @@ import java.io.IOException;
 
 public class Main extends Application {
 
+    FlightList flightlist;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        FlightList flightList = init_planes();
+        init_planes();
         World world = new World();
         parse_airports(world);
+
+
+       //Exemple pour Aéroport Charles de Gaulle
+
+        String ICAO = "ACDG";
+        getFlightlist(ICAO);
+        flightlist.depuis("From","ACDG"); //Test du filtre
+
+
+
+
+
+
+
 
 
     }
 
 
-   private FlightList init_planes() {
-        FlightList flightlist;
+   private void init_planes() {
+//Configurer le client http
+
+//Configurer le client http
+       DefaultAsyncHttpClientConfig.Builder clientBuilder = Dsl.config()
+               .setConnectTimeout(500)
+               .setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36")
+               .setKeepAlive(false);
+       AsyncHttpClient client = Dsl.asyncHttpClient(clientBuilder);
+
+//Créer une requête de type GET
+       BoundRequestBuilder getRequest = client.prepareGet("https://public-api.adsbexchange.com/VirtualRadar/AircraftList.json?fOpQ=Air%20France");
+
+
+//Exécuter la requête et récupérer le résultat
+       getRequest.execute(new AsyncCompletionHandler<Object>() {
+           @Override
+           public Object onCompleted(Response response) throws Exception {
+               System.out.println(response.getResponseBody());
+
+               ObjectMapper mapper = new ObjectMapper();
+               mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES); //Ignorer les champs inutiles
+               FlightList flightlist = mapper.readValue(response.getResponseBody(), FlightList.class); //Créer l'objet de plus haut niveau dans le dictionnaire json
+
+
+               //System.out.println(world.getPlanes()[0].getAltitude());
+
+               return response;
+           }
+        });
+    }
+
+    private String request(Request req){ //Formalisation de la requete
+        return ("https://public-api.adsbexchange.com/VirtualRadar/AircraftList.json?"+req.getFiltre()+"Q="+req.getChamp()); //.json?fAirS=XXX
+
+    }
+
+    public void execRequest(Request req){
 
 //Configurer le client http
         DefaultAsyncHttpClientConfig.Builder clientBuilder = Dsl.config()
@@ -40,7 +92,7 @@ public class Main extends Application {
         AsyncHttpClient client = Dsl.asyncHttpClient(clientBuilder);
 
 //Créer une requête de type GET
-        BoundRequestBuilder getRequest = client.prepareGet("https://public-api.adsbexchange.com/VirtualRadar/AircraftList.json?fOpQ=Air%20France");
+        BoundRequestBuilder getRequest = client.prepareGet(request(req));
 
 
 //Exécuter la requête et récupérer le résultat
@@ -51,16 +103,27 @@ public class Main extends Application {
 
                 ObjectMapper mapper = new ObjectMapper();
                 mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES); //Ignorer les champs inutiles
-                FlightList flightlist = mapper.readValue(response.getResponseBody(), FlightList.class); //Créer l'objet de plus haut niveau dans le dictionnaire json
+                flightlist = mapper.readValue(response.getResponseBody(), FlightList.class); //Créer l'objet de plus haut niveau dans le dictionnaire json
+
+
+
+
 
                 //System.out.println(world.getPlanes()[0].getAltitude());
 
                 return response;
             }
-        });
 
-        return flightlist;
+    });
     }
+
+    private void getFlightlist(String ICAO) {
+        Request req = new Request("fICO", ICAO);
+        execRequest(req);
+
+    }
+
+
 
 
     private void parse_airports (World world){
