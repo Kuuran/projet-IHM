@@ -1,20 +1,21 @@
 package FlightLive.elements;
 
 import FlightLive.parse_elements.Flight;
+import java.lang.String;
 
 public class Plane {
     private int id;
-    private java.lang.String icao;
+    private String icao;
     private double altitude;
     private double latitude;
     private double longitude;
     private double speed;
     private double orientation;
-    private java.lang.String type;
-    private java.lang.String depart;
-    private java.lang.String arrivee;
-    private java.lang.String[] escale;
-    private java.lang.String operator;
+    private String type;
+    private String depart;
+    private String arrivee;
+    private String[] escale;
+    private String operator;
 
     public Plane (Flight flight){
         this.id = flight.Id;
@@ -61,27 +62,27 @@ public class Plane {
         this.longitude = longitude;
     }
 
-    public java.lang.String getDepart() {
+    public String getDepart() {
         return depart;
     }
 
-    public void setDepart(java.lang.String depart) {
+    public void setDepart(String depart) {
         this.depart = depart;
     }
 
-    public java.lang.String getArrivee() {
+    public String getArrivee() {
         return arrivee;
     }
 
-    public void setArrivee(java.lang.String arrivee) {
+    public void setArrivee(String arrivee) {
         this.arrivee = arrivee;
     }
 
-    public java.lang.String[] getEscale() {
+    public String[] getEscale() {
         return escale;
     }
 
-    public void setEscale(java.lang.String[] escale) {
+    public void setEscale(String[] escale) {
         this.escale = escale;
     }
 
@@ -93,11 +94,11 @@ public class Plane {
         this.id = id;
     }
 
-    public java.lang.String getIcao() {
+    public String getIcao() {
         return icao;
     }
 
-    public void setIcao(java.lang.String icao) {
+    public void setIcao(String icao) {
         this.icao = icao;
     }
 
@@ -117,19 +118,19 @@ public class Plane {
         this.orientation = orientation;
     }
 
-    public java.lang.String getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(java.lang.String type) {
+    public void setType(String type) {
         this.type = type;
     }
 
-    public java.lang.String getOperator() {
+    public String getOperator() {
         return operator;
     }
 
-    public void setOperator(java.lang.String operator) {
+    public void setOperator(String operator) {
         this.operator = operator;
     }
 }

@@ -1,6 +1,8 @@
 package FlightLive;
 
-import FlightLive.elements.String;
+import java.lang.String;
+
+import FlightLive.elements.Airport;
 import FlightLive.elements.World;
 import FlightLive.parse_elements.FlightList;
 import FlightLive.parse_elements.Request;
@@ -14,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class Main extends Application {
 
@@ -23,7 +26,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         flightlist = new FlightList();
-        int count = 0;
+
+        //TimeUnit.SECONDS timeout = 15;
 
         init_planes();
         while (flightlist.acList.isEmpty()){}
@@ -137,9 +141,9 @@ public class Main extends Application {
             while ((line = br.readLine()) != null) {
 
                 // use comma as separator
-                java.lang.String[] arrayAirport = line.split(cvsSplitBy);
+                String[] arrayAirport = line.split(cvsSplitBy);
 
-                String airport = new String(arrayAirport[0],arrayAirport[1],arrayAirport[2],arrayAirport[3],Double.parseDouble(arrayAirport[4]),Double.parseDouble(arrayAirport[5]));
+                Airport airport = new Airport(arrayAirport[0],arrayAirport[1],arrayAirport[2],arrayAirport[3],Double.parseDouble(arrayAirport[4]),Double.parseDouble(arrayAirport[5]));
                 world.addAirport(airport);
 
             }

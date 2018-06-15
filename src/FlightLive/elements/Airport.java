@@ -1,6 +1,6 @@
 package FlightLive.elements;
 
-public class String {
+public class Airport {
 
     private java.lang.String name;
     private java.lang.String icao;
@@ -9,7 +9,7 @@ public class String {
     private double latitude;
     private double longitude;
 
-    public String(java.lang.String name, java.lang.String city, java.lang.String country, java.lang.String icae, double latitude, double longitude) {
+    public Airport(java.lang.String name, java.lang.String city, java.lang.String country, java.lang.String icae, double latitude, double longitude) {
         this.name = name;
         this.icao = icao;
         this.country = country;

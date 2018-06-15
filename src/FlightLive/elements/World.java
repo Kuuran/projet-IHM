@@ -26,7 +26,7 @@ public class World {
         return airports;
     }
 
-    public void addAirport(String airport){
+    public void addAirport(Airport airport){
         airports.add(airport);
     }
 
