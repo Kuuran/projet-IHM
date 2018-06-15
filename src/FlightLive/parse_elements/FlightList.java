@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 public class FlightList {
 
+    public ArrayList<Flight>acList; //List of planes
+
+    public FlightList(){
+        acList = new ArrayList<>();
+    }
 
     public void getAcList() {
         for (int i=0; i<acList.size();i++){
@@ -14,11 +19,6 @@ public class FlightList {
     public void setAcList(ArrayList<Flight> acList) {
         this.acList = acList;
     }
-
-    public ArrayList<Flight>acList; //List of planes
-
-
-
 
 
     public static boolean contains(String[] arr, String item) {

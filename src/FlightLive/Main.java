@@ -1,8 +1,7 @@
 package FlightLive;
 
-import FlightLive.elements.Airport;
+import FlightLive.elements.String;
 import FlightLive.elements.World;
-import FlightLive.parse_elements.Flight;
 import FlightLive.parse_elements.FlightList;
 import FlightLive.parse_elements.Request;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -23,17 +22,22 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        flightlist = new FlightList();
+        int count = 0;
+
         init_planes();
-        World world = new World();
+        while (flightlist.acList.isEmpty()){}
+
+        World world = new World(flightlist);
         parse_airports(world);
 
 
        //Exemple pour Aéroport Charles de Gaulle
-
-        String ICAO = "ACDG";
+/*
+        java.lang.String ICAO = "ACDG";
         getFlightlist(ICAO);
         flightlist.depuis("From","ACDG"); //Test du filtre
-
+*/
 
 
 
@@ -67,17 +71,14 @@ public class Main extends Application {
 
                ObjectMapper mapper = new ObjectMapper();
                mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES); //Ignorer les champs inutiles
-               FlightList flightlist = mapper.readValue(response.getResponseBody(), FlightList.class); //Créer l'objet de plus haut niveau dans le dictionnaire json
-
-
-               //System.out.println(world.getPlanes()[0].getAltitude());
+               flightlist = mapper.readValue(response.getResponseBody(), FlightList.class); //Créer l'objet de plus haut niveau dans le dictionnaire json
 
                return response;
            }
         });
     }
 
-    private String request(Request req){ //Formalisation de la requete
+    private java.lang.String request(Request req){ //Formalisation de la requete
         return ("https://public-api.adsbexchange.com/VirtualRadar/AircraftList.json?"+req.getFiltre()+"Q="+req.getChamp()); //.json?fAirS=XXX
 
     }
@@ -117,21 +118,18 @@ public class Main extends Application {
     });
     }
 
-    private void getFlightlist(String ICAO) {
+    private void getFlightlist(java.lang.String ICAO) {
         Request req = new Request("fICO", ICAO);
         execRequest(req);
 
     }
 
-
-
-
     private void parse_airports (World world){
 
-        String csvFile = "input/airports.csv";
+        java.lang.String csvFile = "input/airports.csv";
         BufferedReader br = null;
-        String line = "";
-        String cvsSplitBy = ",";
+        java.lang.String line = "";
+        java.lang.String cvsSplitBy = ",";
 
         try {
 
@@ -139,9 +137,9 @@ public class Main extends Application {
             while ((line = br.readLine()) != null) {
 
                 // use comma as separator
-                String[] arrayAirport = line.split(cvsSplitBy);
+                java.lang.String[] arrayAirport = line.split(cvsSplitBy);
 
-                Airport airport = new Airport(arrayAirport[0],arrayAirport[1],arrayAirport[2],arrayAirport[3],Double.parseDouble(arrayAirport[4]),Double.parseDouble(arrayAirport[5]));
+                String airport = new String(arrayAirport[0],arrayAirport[1],arrayAirport[2],arrayAirport[3],Double.parseDouble(arrayAirport[4]),Double.parseDouble(arrayAirport[5]));
                 world.addAirport(airport);
 
             }

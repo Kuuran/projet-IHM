@@ -1,15 +1,15 @@
 package FlightLive.elements;
 
-public class Airport {
+public class String {
 
-    private String name;
-    private String icao;
-    private String country;
-    private String city;
+    private java.lang.String name;
+    private java.lang.String icao;
+    private java.lang.String country;
+    private java.lang.String city;
     private double latitude;
     private double longitude;
 
-    public Airport(String name, String city, String country, String icae, double latitude, double longitude) {
+    public String(java.lang.String name, java.lang.String city, java.lang.String country, java.lang.String icae, double latitude, double longitude) {
         this.name = name;
         this.icao = icao;
         this.country = country;
@@ -27,35 +27,35 @@ public class Airport {
         this.longitude = longitude;
     }
 
-    public String getName() {
+    public java.lang.String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(java.lang.String name) {
         this.name = name;
     }
 
-    public String getIcao() {
+    public java.lang.String getIcao() {
         return icao;
     }
 
-    public void setIcao(String icao) {
+    public void setIcao(java.lang.String icao) {
         this.icao = icao;
     }
 
-    public String getCountry() {
+    public java.lang.String getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
+    public void setCountry(java.lang.String country) {
         this.country = country;
     }
 
-    public String getCity() {
+    public java.lang.String getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setCity(java.lang.String city) {
         this.city = city;
     }
 

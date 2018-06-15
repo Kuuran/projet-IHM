@@ -1,40 +1,32 @@
 package FlightLive.elements;
 
-import org.asynchttpclient.AsyncCompletionHandler;
-import org.asynchttpclient.AsyncHttpClient;
-import org.asynchttpclient.BoundRequestBuilder;
-import org.asynchttpclient.DefaultAsyncHttpClientConfig;
-import org.asynchttpclient.Dsl;
-import org.asynchttpclient.Response;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import FlightLive.parse_elements.Flight;
+import FlightLive.parse_elements.FlightList;
 
 import java.util.ArrayList;
 
 public class World {
 
-    private ArrayList<Airport> airports;
+    private ArrayList<String> airports;
     private Plane[] planes;
    // private String lastDv;
 
-    public World(){
+    public World(FlightList flightList){
         airports = new ArrayList<>();
-        //planes = new ArrayList<>();
+        int i =0;
+        for (Flight flight : flightList.acList){
+            planes[i] = new Plane(flight);
+            i++;
+        }
     }
 
 
 
-    public ArrayList<Airport> getAirports() {
+    public ArrayList<String> getAirports() {
         return airports;
     }
 
-    public void addAirport(Airport airport){
+    public void addAirport(String airport){
         airports.add(airport);
     }
 
