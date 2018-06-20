@@ -10,16 +10,9 @@ public class FlightList {
         acList = new ArrayList<>();
     }
 
-    public void getAcList() {
-        for (int i=0; i<acList.size();i++){
-            System.out.println(this.acList.get(i));
-        }
+    public void clear(){
+        acList.clear();
     }
-
-    public void setAcList(ArrayList<Flight> acList) {
-        this.acList = acList;
-    }
-
 
     public static boolean contains(String[] arr, String item) {
         for (int i=0; i<arr.length; i++) {
@@ -29,35 +22,6 @@ public class FlightList {
         }
         return false;
     }
-
-    public void depuis(String Filtre,String ICAO){
-        ArrayList<Flight> list=new ArrayList<>();
-        switch (Filtre){
-            case "From": for (int i=0; i<this.acList.size();i++){
-                if (this.acList.get(i).From==ICAO){
-                    list.add(acList.get(i));
-                }
-                break;
-            }
-            case "To": for (int i=0; i<this.acList.size();i++){
-                if (this.acList.get(i).To==ICAO){
-                    list.add(acList.get(i));
-                }
-                break;
-            }
-            case "Stops": for (int i=0; i<this.acList.size();i++){
-                if (contains(this.acList.get(i).Stops,ICAO)){
-                    list.add(acList.get(i));
-                }
-                break;
-            }
-            default:
-                System.out.println("First argument can only contain 'From','To', or 'Stop'");
-
-        }
-
-    }
-
 
 
 }
