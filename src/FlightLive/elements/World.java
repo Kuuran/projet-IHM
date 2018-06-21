@@ -8,6 +8,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.scene.layout.Pane;
 import org.asynchttpclient.*;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -17,7 +21,7 @@ public class World {
     private FlightList flightlist;
     private boolean requesting;
 
-    ArrayList<Plane> planes;
+    private ArrayList<Plane> planes;
 
     public World(){
         airports = new ArrayList<>();
@@ -26,6 +30,13 @@ public class World {
         requesting = false;
     }
 
+    public boolean isRequesting() {
+        return requesting;
+    }
+
+    public ArrayList<Plane> getPlanes(){
+        return planes;
+    }
 
 
     public ArrayList<Airport> getAirports() {
@@ -142,5 +153,42 @@ public class World {
 
         });
     }
+
+    public void parse_airports (){
+
+        java.lang.String csvFile = "res/airports.csv";
+        BufferedReader br = null;
+        java.lang.String line = "";
+        java.lang.String cvsSplitBy = ",";
+
+        try {
+
+            br = new BufferedReader(new FileReader(csvFile));
+            while ((line = br.readLine()) != null) {
+
+                // use comma as separator
+                String[] arrayAirport = line.split(cvsSplitBy);
+
+                Airport airport = new Airport(arrayAirport[0],arrayAirport[1],arrayAirport[2],arrayAirport[3],Double.parseDouble(arrayAirport[4]),Double.parseDouble(arrayAirport[5]));
+                this.addAirport(airport);
+
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
 
 }

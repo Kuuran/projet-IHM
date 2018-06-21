@@ -15,7 +15,6 @@ public class Plane {
     private String type;
     private String depart;
     private String arrivee;
-    private ArrayList<String> escale;
     private String operator;
 
     public Plane (Flight flight){
@@ -30,15 +29,21 @@ public class Plane {
         this.depart = flight.From;
         this.arrivee = flight.To;
 
-        if(flight.Stops != null) {
-            for (java.lang.String str : flight.Stops) {
-                if(!str.isEmpty()) {
-                   // escale.add(str);
-                }
-            }
-        }
-
         this.operator = flight.Op;
+    }
+    public Plane (Plane plane){
+        this.id = plane.id;
+        this.icao = plane.icao;
+        this.altitude = plane.altitude;
+        this.latitude = plane.latitude;
+        this.longitude = plane.longitude;
+        this.speed = plane.speed;
+        this.orientation = plane.orientation;
+        this.type = plane.type;
+        this.depart = plane.depart;
+        this.arrivee = plane.arrivee;
+
+        this.operator = plane.operator;
     }
 
     @Override
@@ -84,14 +89,6 @@ public class Plane {
 
     public void setArrivee(String arrivee) {
         this.arrivee = arrivee;
-    }
-
-    public ArrayList<String> getEscale() {
-        return escale;
-    }
-
-    public void setEscale(ArrayList<String> escale) {
-        this.escale = escale;
     }
 
     public int getId() {
