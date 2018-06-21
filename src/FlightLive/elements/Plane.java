@@ -2,6 +2,7 @@ package FlightLive.elements;
 
 import FlightLive.parse_elements.Flight;
 import java.lang.String;
+import java.util.ArrayList;
 
 public class Plane {
     private int id;
@@ -14,7 +15,7 @@ public class Plane {
     private String type;
     private String depart;
     private String arrivee;
-    private String[] escale;
+    private ArrayList<String> escale;
     private String operator;
 
     public Plane (Flight flight){
@@ -29,13 +30,20 @@ public class Plane {
         this.depart = flight.From;
         this.arrivee = flight.To;
 
-        int i = 0;
-        for (java.lang.String str : flight.Stops){
-            this.escale[i] = str;
-            i++;
+        if(flight.Stops != null) {
+            for (java.lang.String str : flight.Stops) {
+                if(!str.isEmpty()) {
+                   // escale.add(str);
+                }
+            }
         }
 
         this.operator = flight.Op;
+    }
+
+    @Override
+    public String toString(){
+        return String.format("%s  ;  %s  ;  %s  :  %s  :  %s.", id, depart, arrivee, type, operator);
     }
 
     public double getAltitude() {
@@ -78,11 +86,11 @@ public class Plane {
         this.arrivee = arrivee;
     }
 
-    public String[] getEscale() {
+    public ArrayList<String> getEscale() {
         return escale;
     }
 
-    public void setEscale(String[] escale) {
+    public void setEscale(ArrayList<String> escale) {
         this.escale = escale;
     }
 

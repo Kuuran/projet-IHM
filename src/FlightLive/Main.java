@@ -42,7 +42,11 @@ public class Main extends Application {
 
     }
 
-   private void init_planes() {
+    public static void main(String[] args){
+        launch(args);
+    }
+
+    private void init_planes() {
 //Configurer le client http
 
 //Configurer le client http

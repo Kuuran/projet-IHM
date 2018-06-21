@@ -9,15 +9,21 @@ import javafx.scene.layout.Pane;
 import org.asynchttpclient.*;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class World {
 
     private ArrayList<Airport> airports;
     private FlightList flightlist;
+    private boolean requesting;
+
+    ArrayList<Plane> planes;
 
     public World(){
         airports = new ArrayList<>();
         flightlist = new FlightList();
+        planes = new ArrayList<>();
+        requesting = false;
     }
 
 
@@ -54,51 +60,55 @@ public class World {
         return result;
     }
 
-    public ArrayList<Plane> getPlanesFromToAirport(Airport from, Airport to){
-        ArrayList<Plane> planes = new ArrayList<>();
+    public ArrayList<Plane> getPlanesFromToAirport(Airport from, Airport to) throws InterruptedException {
         ArrayList<Plane> buffer = getPlanesFromAirport(from);
+        ArrayList<Plane> result = new ArrayList<>();
 
         for(Plane plane : buffer){
-            if(plane.getArrivee().equals(to.getIcao())){
-                planes.add(plane);
+            if(plane.getArrivee().startsWith(to.getIcao())){
+                result.add(plane);
             }
         }
-        return planes;
+        return result;
     }
 
-    public ArrayList<Plane> getPlanesToAirport(Airport airport){
-        ArrayList<Plane> planes = new ArrayList<>();
+    public ArrayList<Plane> getPlanesToAirport(Airport airport) throws InterruptedException {
+        planes.clear();
+        ArrayList<Plane> result = new ArrayList<>();
         Request req = new Request("fAir", airport.getIcao());
+        requesting = true;
         execRequest(req);
 
-        for (Flight flight : flightlist.acList){
-            if(flight.getTo().equals(airport.getIcao())){
-                planes.add(new Plane(flight));
+        while(requesting){System.out.print("");}
+
+        for (Plane plane : planes) {
+            if (plane.getArrivee().startsWith(airport.getIcao())) {
+                result.add(plane);
             }
         }
-
-        flightlist.clear();
-        return planes;
+        return result;
     }
 
-    public ArrayList<Plane> getPlanesFromAirport(Airport airport){
-        ArrayList<Plane> planes = new ArrayList<>();
+    public ArrayList<Plane> getPlanesFromAirport(Airport airport) throws InterruptedException {
+        planes.clear();
+        ArrayList<Plane> result = new ArrayList<>();
         Request req = new Request("fAir", airport.getIcao());
+        requesting = true;
         execRequest(req);
 
-        for (Flight flight : flightlist.acList){
-            if(flight.getFrom().equals(airport.getIcao())){
-                planes.add(new Plane(flight));
+        while(requesting){System.out.print("");}
+
+        for (Plane plane : planes) {
+            if (plane.getDepart().startsWith(airport.getIcao())) {
+                result.add(plane);
             }
         }
-
-        flightlist.clear();
-        return planes;
+        return result;
     }
+
 
     private java.lang.String request(Request req){ //Formalisation de la requete
         return ("https://public-api.adsbexchange.com/VirtualRadar/AircraftList.json?"+req.getFiltre()+"Q="+req.getChamp()); //.json?fAirS=XXX
-
     }
 
     public void execRequest(Request req){
@@ -118,18 +128,15 @@ public class World {
         getRequest.execute(new AsyncCompletionHandler<Object>() {
             @Override
             public Object onCompleted(Response response) throws Exception {
-                System.out.println(response.getResponseBody());
-
                 ObjectMapper mapper = new ObjectMapper();
                 mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES); //Ignorer les champs inutiles
                 flightlist = mapper.readValue(response.getResponseBody(), FlightList.class); //Créer l'objet de plus haut niveau dans le dictionnaire json
 
-
-
-
-
-                //System.out.println(world.getPlanes()[0].getAltitude());
-
+                for(Flight flight : flightlist.acList){
+                    planes.add(new Plane(flight));
+                }
+                requesting = false;
+                flightlist.clear();
                 return response;
             }
 
