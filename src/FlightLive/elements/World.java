@@ -117,6 +117,68 @@ public class World {
         return result;
     }
 
+    public ArrayList<Plane> getPlanesFromToCity(String from, String to) throws InterruptedException {
+
+        ArrayList<Airport> listeAirport = getAirportsInCity(to);
+        ArrayList<Plane> buffer = getPlanesFromCity(from);
+        ArrayList<Plane> result = new ArrayList<>();
+
+
+        for(Plane plane : buffer){
+            for(int i=0; i<listeAirport.size();i++)
+            if(plane.getArrivee().startsWith(listeAirport.get(i).getIcao())){
+                result.add(plane);
+            }
+        }
+        return result;
+    }
+        public ArrayList<Plane> getPlanesFromCity(String city) throws InterruptedException {
+        planes.clear();
+        ArrayList<Plane> result = new ArrayList<>();
+        ArrayList<Airport> listeAirport = getAirportsInCity(city);
+        for (int i=0;i<listeAirport.size();i++) {
+            Request req = new Request("fAir", listeAirport.get(i).getIcao());
+            requesting = true;
+            execRequest(req);
+            while (requesting) {
+                System.out.print("");
+            }
+
+            for (Plane plane : planes) {
+                if (plane.getDepart().startsWith(listeAirport.get(i).getIcao())) {
+                    result.add(plane);
+                }
+            }
+        }
+            return result;
+
+
+        }
+    public ArrayList<Plane> getPlanesToCity(String city) throws InterruptedException {
+        planes.clear();
+        ArrayList<Plane> result = new ArrayList<>();
+        ArrayList<Airport> listeAirport = getAirportsInCity(city);
+        for (int i=0;i<listeAirport.size();i++) {
+            Request req = new Request("fAir", listeAirport.get(i).getIcao());
+            requesting = true;
+            execRequest(req);
+            while (requesting) {
+                System.out.print("");
+            }
+
+            for (Plane plane : planes) {
+                if (plane.getArrivee().startsWith(listeAirport.get(i).getIcao())) {
+                    result.add(plane);
+                }
+            }
+        }
+        return result;
+
+
+    }
+
+
+
 
     private java.lang.String request(Request req){ //Formalisation de la requete
         return ("https://public-api.adsbexchange.com/VirtualRadar/AircraftList.json?"+req.getFiltre()+"Q="+req.getChamp()); //.json?fAirS=XXX
