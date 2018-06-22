@@ -50,6 +50,9 @@ public class Plane {
     public String toString(){
         return String.format("%s  ;  %s  ;  %s  :  %s  :  %s.", id, depart, arrivee, type, operator);
     }
+    public String extendedToString(){
+        return String.format("Id : %s\nDepart : %s\nArrivee : %s\nPosition : %s / %s\nAltitude : %s\nType : %s", id, depart, arrivee, latitude, longitude, altitude, type);
+    }
 
     public double getAltitude() {
         return altitude;

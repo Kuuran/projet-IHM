@@ -13,55 +13,52 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.121"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="FlightLive.graphics.Graphics">
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FlightLive.graphics.Graphics">
     <children>
-        <HBox prefHeight="500.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <HBox prefHeight="500.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                      minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="300.0" spacing="8.0">
+                <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="300.0" spacing="8.0">
                     <children>
                         <MenuBar>
                             <menus>
                                 <Menu mnemonicParsing="false" text="File">
                                     <items>
-                                        <MenuItem mnemonicParsing="false" text="Export selection"/>
+                                        <MenuItem mnemonicParsing="false" text="Export selection" />
                                     </items>
                                 </Menu>
                                 <Menu mnemonicParsing="false" text="Help">
                                     <items>
-                                        <MenuItem mnemonicParsing="false" text="About"/>
+                                        <MenuItem mnemonicParsing="false" text="About" />
                                     </items>
                                 </Menu>
                             </menus>
                             <opaqueInsets>
-                                <Insets/>
+                                <Insets />
                             </opaqueInsets>
                         </MenuBar>
                         <VBox spacing="8.0">
                             <children>
                                 <Label text="Départ" underline="true">
                                     <VBox.margin>
-                                        <Insets left="8.0"/>
+                                        <Insets left="8.0" />
                                     </VBox.margin>
                                 </Label>
                                 <HBox alignment="CENTER" spacing="8.0">
                                     <children>
-                                        <Label text="Pays"/>
-                                        <ComboBox editable="true" prefWidth="150.0" style="-fx-background-radius: 0;"/>
+                                        <Label text="Pays" />
+                                        <ComboBox fx:id="fromCountry" editable="true" prefWidth="150.0" style="-fx-background-radius: 0;" />
                                     </children>
                                 </HBox>
                                 <HBox alignment="CENTER" spacing="8.0">
                                     <children>
-                                        <Label text="Ville"/>
-                                        <ComboBox disable="true" editable="true" prefWidth="150.0"/>
+                                        <Label text="Ville" />
+                                        <ComboBox fx:id="fromCity" disable="true" editable="true" prefWidth="150.0" />
                                     </children>
                                 </HBox>
                                 <HBox alignment="CENTER" layoutX="10.0" layoutY="68.0" spacing="8.0">
                                     <children>
-                                        <Label text="Aeroport"/>
-                                        <ComboBox disable="true" editable="true" prefWidth="150.0"/>
+                                        <Label text="Aeroport" />
+                                        <ComboBox fx:id="fromAirport" disable="true" editable="true" prefWidth="150.0" />
                                     </children>
                                 </HBox>
                             </children>
@@ -70,38 +67,37 @@
                             <children>
                                 <Label text="Arrivée" underline="true">
                                     <VBox.margin>
-                                        <Insets left="8.0"/>
+                                        <Insets left="8.0" />
                                     </VBox.margin>
                                 </Label>
                                 <HBox alignment="CENTER" spacing="8.0">
                                     <children>
-                                        <Label text="Pays"/>
-                                        <ComboBox editable="true" prefWidth="150.0"/>
+                                        <Label text="Pays" />
+                                        <ComboBox fx:id="toCountry" editable="true" prefWidth="150.0" />
                                     </children>
                                 </HBox>
                                 <HBox alignment="CENTER" spacing="8.0">
                                     <children>
-                                        <Label text="Ville"/>
-                                        <ComboBox disable="true" editable="true" prefWidth="150.0"/>
+                                        <Label text="Ville" />
+                                        <ComboBox fx:id="toCity" disable="true" editable="true" prefWidth="150.0" />
                                     </children>
                                 </HBox>
                                 <HBox alignment="CENTER" layoutX="10.0" layoutY="68.0" spacing="8.0">
                                     <children>
-                                        <Label text="Aeroport"/>
-                                        <ComboBox disable="true" editable="true" prefWidth="150.0"/>
+                                        <Label text="Aeroport" />
+                                        <ComboBox fx:id="toAirport" disable="true" editable="true" prefWidth="150.0" />
                                     </children>
                                 </HBox>
                             </children>
                         </VBox>
-                        <Button mnemonicParsing="false" text="Valider"/>
-                        <ListView prefHeight="200.0" prefWidth="200.0"/>
-                        <TextFlow prefHeight="200.0" prefWidth="200.0"/>
+                        <Button fx:id="launchButton" mnemonicParsing="false" text="Valider" />
+                        <ListView fx:id="listView" prefHeight="200.0" prefWidth="200.0" />
+                        <TextFlow fx:id="textFlow" prefHeight="200.0" prefWidth="200.0" />
                     </children>
                 </VBox>
                 <AnchorPane fx:id="container3D" prefHeight="500.0" prefWidth="509.0">
                     <children>
-                        <Label fx:id="coordinatesLabel" text="0° 00' 00.0&quot;N 0° 00' 00.0&quot;E" textFill="WHITE"
-                               AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="8.0"/>
+                        <Label fx:id="coordinatesLabel" text="0° 00' 00.0&quot;N 0° 00' 00.0&quot;E" textFill="WHITE" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="8.0" />
                     </children>
                 </AnchorPane>
             </children>

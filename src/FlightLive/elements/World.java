@@ -71,12 +71,25 @@ public class World {
         return result;
     }
 
+    public ArrayList<String> getCountries(){
+        ArrayList<String> result = new ArrayList<>();
+
+        for(Airport airport : airports){
+            if(!result.contains(airport.getCountry())){
+                result.add(airport.getCountry());
+            }
+        }
+
+        return result;
+    }
+
     public ArrayList<Plane> getPlanesFromToAirport(Airport from, Airport to) throws InterruptedException {
         ArrayList<Plane> buffer = getPlanesFromAirport(from);
         ArrayList<Plane> result = new ArrayList<>();
 
         for(Plane plane : buffer){
             if(plane.getArrivee().startsWith(to.getIcao())){
+                System.out.println("dfsq");
                 result.add(plane);
             }
         }

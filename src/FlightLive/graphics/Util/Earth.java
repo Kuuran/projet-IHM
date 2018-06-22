@@ -32,7 +32,6 @@ public class Earth extends Group {
         outputStream.write(modelTemp, 0, modelTemp.length);
         /* Pour load depuis le jar */
 
-        System.out.println(getClass().getResource(EARTH_MODEL).toURI());
         File file = new File(getClass().getResource(EARTH_MODEL).toURI());
 
         importer.read(file);

@@ -26,7 +26,7 @@ public class Bash {
         //Test of planes from an airport (Stockton Metropolitan Airport)
         System.out.println("#######################################\nPlanes from Charles de Gaulle International Airport :\n#######################################");
         for(Airport airport : world.getAirports()){
-            if(airport.getName().equals("Charles de Gaulle International Airport")){
+            if(airport.getName().equals("Paris-Orly Airport")){
                 planes = world.getPlanesFromAirport(airport);
             }
         }
@@ -44,11 +44,11 @@ public class Bash {
         planes.clear();
 
         //Test of planes from and to two airports (Stockton Metropolitan Airport - Ketchikan International Airport,Ketchikan)
-        System.out.println("#######################################\nPlanes from Charles de Gaulle International Airport to Memphis International Airport :\n#######################################");
+        System.out.println("#######################################\nPlanes from Paris-Orly Airport to Marseille Provence Airport :\n#######################################");
         for(Airport airport : world.getAirports()){
-            if(airport.getName().equals("Charles de Gaulle International Airport")){
+            if(airport.getName().equals("Paris-Orly Airport")){
                 for(Airport airport2 : world.getAirports()){
-                    if(airport2.getName().equals("Memphis International Airport")){
+                    if(airport2.getName().equals("Marseille Provence Airport")){
                         planes = world.getPlanesFromToAirport(airport, airport2);
                     }
                 }

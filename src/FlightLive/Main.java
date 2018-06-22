@@ -33,21 +33,21 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+/*
+        //bash test
+        World world = new World();
+        world.parse_airports();
+        Bash bash = new Bash(world);
+        bash.testPrint();
+        exit(0);*/
 
-        //Initializing graphics
-        //Bash bash = new Bash(world);
 
         Parent root = FXMLLoader.load(Graphics.class.getResource("graphics.fxml"));
 
         primaryStage.setTitle("Flight Live");
         primaryStage.setScene(new Scene(root, 800, 500, true, SceneAntialiasing.BALANCED));
         primaryStage.setResizable(false);
-        //primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("input/airplane.png")));
         primaryStage.show();
-        //Display
-        //bash.testPrint();
-
-        //exit(0);
 
     }
 
