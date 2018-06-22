@@ -24,7 +24,7 @@ public class Bash {
     public void testPrint() throws InterruptedException {
         ArrayList<Plane> planes = new ArrayList<>();
         //Test of planes from an airport (Stockton Metropolitan Airport)
-        System.out.println("#######################################\nPlanes from Charles de Gaulle International Airport :\n#######################################");
+        System.out.println("#######################################\nPlanes from Paris-Orly Airport :\n#######################################");
         for(Airport airport : world.getAirports()){
             if(airport.getName().equals("Paris-Orly Airport")){
                 planes = world.getPlanesFromAirport(airport);
